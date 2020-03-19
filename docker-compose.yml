@@ -1,0 +1,33 @@
+version: '3'    
+    
+services:    
+  reverse-proxy:    
+    image: traefik:v2.0    
+    hostname: traefik.server    
+    ports:    
+      - "80:80"    
+      - "443:443"    
+      - "8080:8080"    
+    volumes:    
+      - traefik:/etc/traefik/    
+      - /var/run/docker.sock:/var/run/docker.sock    
+    deploy:    
+      labels:    
+        - "traefik.http.routers.traefik.rule=Host(`traefik.project.lambla.eu`)"    
+        - traefik.http.services.traefik.loadbalancer.server.port=8080
+        - "traefik.docker.network=traefik_traefik"    
+    networks:    
+      - traefik    
+volumes:    
+  traefik:    
+    driver: local    
+    driver_opts:    
+      type: none    
+      device: /home/dreaser/Documents/projects/traefik/config/    
+      o: bind    
+    
+networks:    
+  traefik:    
+    driver: overlay    
+    external: false  
+
