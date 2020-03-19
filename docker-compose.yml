@@ -23,7 +23,7 @@ volumes:
     driver: local    
     driver_opts:    
       type: none    
-      device: /home/dreaser/Documents/projects/traefik/config/    
+      device: /home/dreaser/traefik/config/    
       o: bind    
     
 networks:    
