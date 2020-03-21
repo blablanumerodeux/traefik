@@ -3,7 +3,7 @@ version: '3'
 services:    
   reverse-proxy:    
     image: traefik:v2.0    
-    hostname: project.lambla.eu
+    hostname: traefik.project.lambla.eu    
     ports:    
       - "80:80"    
       - "443:443"    
@@ -13,8 +13,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock    
     deploy:    
       labels:    
+        - "traefik.enable=true"
         - "traefik.http.routers.traefik.rule=Host(`traefik.project.lambla.eu`)"    
-        - traefik.http.services.traefik.loadbalancer.server.port=8080
+        - "traefik.http.services.traefik.loadbalancer.server.port=80"
         - "traefik.docker.network=traefik_traefik"    
     networks:    
       - traefik    
@@ -30,4 +31,5 @@ networks:
   traefik:    
     driver: overlay    
     external: false  
+
 
