@@ -1,36 +1,36 @@
 [http.routers]
   [http.routers.router1]
     entryPoints = ["web"]
-    middlewares = ["test-redirectscheme"]
-    rule = "Host(`test.localhost`)"
-    service = "Service01"
+    middlewares = ["test-redirectscheme@docker"]
+    rule = "Host(`dakarr.project.lambla.eu`)"
+    service = "dakar-frontt"
 
   [http.routers.router2]
     entryPoints = ["websecure"]
-    middlewares = ["Middleware09"]
-    rule = "Host(`test.localhost`)"
-    service = "Service01"
+    middlewares = ["test-redirectscheme@docker"]
+    rule = "Host(`dakarr.project.lambla.eu`)"
+    service = "dakar-frontt"
     [http.routers.router2.tls]
     [tcp.routers.router2.tls]
       passthrough = true
 
 [http.services]
-  [http.services.Service01.loadBalancer]
-    [[http.services.Service01.loadBalancer.servers]]
-      url = "https://blablanumerodeux.github.io/"
-      passHostHeader = true 
+  [http.services.dakar-frontt.loadBalancer]
+    [[http.services.dakar-frontt.loadBalancer.servers]]
+      url = "https://dakarinternational.github.io/DaKar-ngFront/"
+      passHostHeader = true
 
 
 # Redirect to https
-[http.middlewares]
-  [http.middlewares.test-redirectscheme.redirectScheme]
-      scheme = "https"
+#[http.middlewares]
+#  [http.middlewares.test-redirectscheme.redirectScheme]
+#      scheme = "https"
 
 
-[http.middlewares.test-redirectregex.redirectRegex]
-  regex = "https://test.localhost/"
-  replacement = "https://blablanumerodeux.github.io/"
-  permanent = true
+#[http.middlewares.test-redirectregex.redirectRegex]
+#  regex = "https://test.localhost/"
+#  replacement = "https://blablanumerodeux.github.io/"
+#  permanent = true
 
 [http.middlewares.Middleware09]
   [http.middlewares.Middleware09.headers]
@@ -71,8 +71,10 @@
 #      name0 = "foobar"
 #      name1 = "foobar"
 
-[tls.stores]
-  [tls.stores.default]
-    [tls.stores.default.defaultCertificate]
-      certFile = "/etc/traefik/cert.crt"
-      keyFile  = "/etc/traefik/cert.key"
+#[tls.stores]
+#  [tls.stores.default]
+#    [tls.stores.default.defaultCertificate]
+#      certFile = "/etc/traefik/cert.crt"
+#      keyFile  = "/etc/traefik/cert.key"
+
+
