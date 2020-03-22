@@ -1,0 +1,78 @@
+[http.routers]
+  [http.routers.router1]
+    entryPoints = ["web"]
+    middlewares = ["test-redirectscheme"]
+    rule = "Host(`test.localhost`)"
+    service = "Service01"
+
+  [http.routers.router2]
+    entryPoints = ["websecure"]
+    middlewares = ["Middleware09"]
+    rule = "Host(`test.localhost`)"
+    service = "Service01"
+    [http.routers.router2.tls]
+    [tcp.routers.router2.tls]
+      passthrough = true
+
+[http.services]
+  [http.services.Service01.loadBalancer]
+    [[http.services.Service01.loadBalancer.servers]]
+      url = "https://blablanumerodeux.github.io/"
+      passHostHeader = true 
+
+
+# Redirect to https
+[http.middlewares]
+  [http.middlewares.test-redirectscheme.redirectScheme]
+      scheme = "https"
+
+
+[http.middlewares.test-redirectregex.redirectRegex]
+  regex = "https://test.localhost/"
+  replacement = "https://blablanumerodeux.github.io/"
+  permanent = true
+
+[http.middlewares.Middleware09]
+  [http.middlewares.Middleware09.headers]
+#    accessControlAllowCredentials = true
+#    accessControlAllowHeaders = ["foobar", "foobar"]
+#    accessControlAllowMethods = ["foobar", "foobar"]
+#    accessControlAllowOrigin = "foobar"
+#    accessControlExposeHeaders = ["foobar", "foobar"]
+#    accessControlMaxAge = 42
+#    addVaryHeader = true
+#    allowedHosts = ["foobar", "foobar"]
+    #hostsProxyHeaders = ["foobar", "foobar"]
+    sslRedirect = true
+#    sslTemporaryRedirect = true
+#    sslHost = "foobar"
+#    sslForceHost = true
+#    stsSeconds = 42
+#    stsIncludeSubdomains = true
+#    stsPreload = true
+#    forceSTSHeader = true
+#    frameDeny = true
+#    customFrameOptionsValue = "foobar"
+#    contentTypeNosniff = true
+#    browserXssFilter = true
+#    customBrowserXSSValue = "foobar"
+#    contentSecurityPolicy = "foobar"
+#    publicKey = "foobar"
+#    referrerPolicy = "foobar"
+#    featurePolicy = "foobar"
+#    isDevelopment = true
+#    [http.middlewares.Middleware09.headers.customRequestHeaders]
+#      name0 = "foobar"
+#      name1 = "foobar"
+#    [http.middlewares.Middleware09.headers.customResponseHeaders]
+#      name0 = "foobar"
+#      name1 = "foobar"
+#    [http.middlewares.Middleware09.headers.sslProxyHeaders]
+#      name0 = "foobar"
+#      name1 = "foobar"
+
+[tls.stores]
+  [tls.stores.default]
+    [tls.stores.default.defaultCertificate]
+      certFile = "/etc/traefik/cert.crt"
+      keyFile  = "/etc/traefik/cert.key"
