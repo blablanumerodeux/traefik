@@ -7,12 +7,12 @@
 
   [http.routers.router2]
     entryPoints = ["websecure"]
-    middlewares = ["test-redirectscheme@docker"]
+    #middlewares = ["test-redirectscheme@docker"]
     rule = "Host(`dakarr.project.lambla.eu`)"
     service = "dakar-frontt"
     [http.routers.router2.tls]
-    [tcp.routers.router2.tls]
-      passthrough = true
+    #[tcp.routers.router2.tls]
+    #  passthrough = true
 
 [http.services]
   [http.services.dakar-frontt.loadBalancer]
